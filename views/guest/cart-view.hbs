@@ -1,0 +1,71 @@
+
+
+
+
+
+
+{{>guest-header}}
+
+
+{{!-- --}}
+<div class="container mt-5">
+  <h2>Your Cart</h2>
+
+  {{#if cart.items.length}}
+  <table class="table">
+    <thead>
+      <tr>
+
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>UnitPrice</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cart.items}} 
+      <tr>
+        <td>{{product.name}}</td>
+        <td>{{quantity}}</td>
+        <td>{{product.price}}.00</td>
+        <td>{{this.totalPrice}}.00</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>Total Price :  ₹ <b>{{grandTotal}}.00</b>
+  <form action="/guest/place-order" method="POST" class="mt-3">
+    <button type="submit" class="btn btn-primary">Place Order</button>
+  </form>
+
+
+
+  {{else}}
+  <div class="nocart">
+    <h2>Ooooppss !!! Your cart is empty.</h2>
+    <img width ="500px" src="/img/Empty-cart.png" alt="No cart Image">
+    <a href="/guest/menu"><button type="submit" class="btn btn-success">Add-Items</button></a>
+  </div>
+  {{/if}}
+
+</div>
+
+<style>
+  @media(max-width:400px){
+    body{
+      text-align: center;
+    }
+  }
+
+  .nocart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+  {{!-- background-image: url("/img/.png") --}} 
+  background-size: cover;
+  background-position: center;
+}
+</style>
+ 

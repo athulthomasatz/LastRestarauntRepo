@@ -1,0 +1,156 @@
+{{!-- 
+{{>user-header}}
+<div class="container mt-5 ">
+    <h2>All Items in {{category.name}}</h2>
+    {{categoryName}}
+    {{#each items}}
+    <div class="card" style="width: 18rem;">
+        <img src="/uploads/{{this.imageUrl}}" width="200" class="img" height="100" alt="Food Categories">
+        <div class="card-body">
+
+            <h5 class="card-title">{{this.name}}</h5>
+            {{this.price}}
+            <h6 class="card-title">Appx Time : {{this.apprtime}}</h6>
+            
+            <form method="post" action="/user/cart">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary" type="button" onclick="decrementValue('{{this._id}}')">-</button>
+                    <input type="number" name="quantity" id="quantity_{{this._id}}" class="form-control"  value="{{this.quantity}}">
+                    
+                    <button class="btn btn-outline-secondary" type="button" onclick="incrementValue('{{this._id}}')">+</button>
+                </div>
+                <input type="hidden" name="itemId" value="{{this._id}}">
+                <button type="submit" class="btn btn-primary">Update Cart</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .card{
+            color: red;
+            background-color: rgb(183, 248, 226);
+            display:flex ;
+        }
+        .img{
+            justify-content: center;
+        }
+    </style>
+    {{/each}}
+    {{this.quantity}}
+</div>
+<script>
+    function incrementValue(itemId) {
+        var quantity = parseInt(document.getElementById("quantity_" + itemId).value, 10);
+        quantity = isNaN(quantity) ? 0 : quantity;
+        quantity++;
+        document.getElementById("quantity_" + itemId).value = quantity;
+    }
+
+    function decrementValue(itemId) {
+        var quantity = parseInt(document.getElementById("quantity_" + itemId).value, 10);
+        quantity = isNaN(quantity) ? 0 : quantity;
+        if (quantity > 0) {
+            quantity--;
+        }
+        document.getElementById("quantity_" + itemId).value = quantity;
+    }
+</script> --}}
+
+
+{{>user-header}}
+<div class="container mt-5 ">
+    <h2>All Items in {{category.name}}</h2>
+    {{categoryName}}
+    <div class="d-flex justify-content-center gap-1 row ">
+    {{#each items}}
+    <div class="card m-2 col-sm-6" style="width: 18rem;">
+        <div class="img">
+        <img id="imgg" src="/uploads/{{this.imageUrl}}" width="200" height="100" alt="Food Categories"></div>
+        <div class="card-body">
+            <div class="text">
+            <h5 class="card-title">{{this.name}}</h5>
+            <h5>₹ {{this.price}}.00</h5>
+            <h6 class="card-title">Appx Time : {{this.apprtime}} Minutes</h6></div> 
+            {{!-- {{apprtime}} --}}
+            <form method="post" action="/user/cart" id="form_{{this._id}}">
+                <div class="input-group mb-3">
+                    <button id="minus" class="btn btn-outline-secondary" type="button" onclick="decrementValue('{{this._id}}')">-</button>
+                    <input type="number" name="quantity" id="quantity_{{this._id}}" class="form-control"  value="{{this.quantity }}">
+                    
+                    <button id="plus" class="btn btn-outline-secondary" type="button" onclick="incrementValue('{{this._id}}')">+</button>
+                </div>
+                <input type="hidden" name="itemId" value="{{this._id}}">
+                <div class="d-flex justify-content-center">
+                <button type="button" onclick="updateCart('{{this._id}}')" class="btn btn-primary ">Update Cart</button></div>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+    {{this.quantity}}
+    </div>
+</div>
+<script>
+    function updateCart(itemId) {
+    const quantityInput = document.getElementById('quantity_' + itemId);
+    const quantityValue = parseInt(quantityInput.value);
+    if (isNaN(quantityValue) || quantityValue <= 0) {
+        alert('Please enter a valid quantity.');
+        return;
+    }
+
+    // submit the form
+    document.getElementById('form_' + itemId).submit();
+}
+
+</script>
+<style>
+    .img{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+    #imgg {
+    height: 150px;
+    width: 90%;
+    object-fit: cover;
+    border-radius: 7px 7px 0 0;
+    
+  }
+  .card{
+        background-color: #f1f1f1;
+    }
+    .text{
+        text-align: center;
+    }
+    #plus{
+        background-color: white;
+        color: black;
+        font-size: x-large;
+    }
+    #minus{
+        background-color: white;
+        color: black;
+        font-size: x-large;
+    }
+</style>
+<script>
+    function incrementValue(itemId) {
+        var quantity = parseInt(document.getElementById("quantity_" + itemId).value, 10);
+        quantity = isNaN(quantity) ? 0 : quantity;
+        quantity++;
+        document.getElementById("quantity_" + itemId).value = quantity;
+    }
+
+    function decrementValue(itemId) {
+        var quantity = parseInt(document.getElementById("quantity_" + itemId).value, 10);
+        quantity = isNaN(quantity) ? 0 : quantity;
+        if (quantity > 0) {
+            quantity--;
+        }
+        document.getElementById("quantity_" + itemId).value = quantity;
+    }
+</script>
+
+
+

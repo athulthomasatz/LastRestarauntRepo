@@ -1,0 +1,65 @@
+
+
+{{>guest-header}}
+
+<div class="container mt-5">
+  <h2>Ordered Items</h2>
+
+  {{#if orders.length}} 
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+          {{!-- <th>Payment Method</th>
+          <th>Payment Status</th>
+          <th>Order Status</th> --}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+          
+  <h3>Total :  ₹ <b>{{totalAmount}}.00</b></h3>
+          {{#each this.items}}
+            <tr>
+              <td>{{product.name}}</td> 
+              <td>{{quantity}}</td>
+              <td>{{product.price}}.00</td> 
+                            
+              <td>{{totalPrice}}.00</td>
+              
+              {{!-- <td>Thenga***</td>
+              <td>{{../paymentStatus}}</td>
+              <td>{{../orderStatus}}</td> --}}
+            </tr>
+            
+        {{/each}}
+          {{/each}}
+      </tbody>
+    </table>
+    
+  {{else}}
+     <div class="noorder">
+    <h2>Ooooppss !!! You haven't ordered anything Yet .</h2>
+    <img width ="500px" src="/img/No-order.png" alt="No order Image">
+    <a href="/guest/cart-view"><button type="submit" class="btn btn-success">Go-to-Cart</button></a>
+  </div>
+  {{/if}}
+</div>
+
+<style>
+  @media(max-width:400px){
+    body{
+      text-align: center;
+    }
+  }
+
+  .noorder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

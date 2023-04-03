@@ -1,0 +1,110 @@
+ {{>manager-header}}
+
+
+<style>
+  .header {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .order {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  h4 {
+    margin-top: 0;
+    font-weight: bold;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+
+  tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  p {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+
+<div class="header">
+  <h3>Guest Orders</h3>
+</div>
+
+{{#each orders}}
+  <div class="order">
+    <h4>Order ID: {{this._id}}</h4> 
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.items}}
+          <tr>
+            <td>{{this.product.name}}</td>
+            <td>₹{{this.product.price}}.00</td>
+            <td>{{this.quantity}}</td>
+            <td>₹{{this.totalPrice}}.00</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <p>Total Amount: ₹{{this.totalAmount}}.00</p>
+  </div>
+{{/each}}
+
+{{!-- <div class="header">
+  <h3>Guest Orders</h3>
+</div>
+
+{{#each orders}}
+  <div class="order">
+    <h4>Order ID: {{this._id}}</h4> 
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.items}}
+          <tr>
+            <td>{{this.product.name}}</td>
+            <td>{{this.product.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.totalPrice}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <p>Total Amount: {{this.totalAmount}}</p>
+  </div>
+{{/each}} --}}

@@ -1,0 +1,230 @@
+{{!-- {{>user-header user="{{userName}}" }}
+<div class="container mt-5 ">
+{{#each categories}}
+<a href="/user/menu/{{this.name}}" class="text-decoration-none link-dark">
+<div class="card">
+            <img src="/uploads/{{this.imageUrl}}" width="200" height="100" alt="Food Categories">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p class="card-text">{{this.description}}
+                </p>
+            </div>
+        </div>
+        </a>
+{{/each}}
+</div> --}}
+
+{{>user-header user="{{userName}}" }}
+
+
+<div class="container mt-5 ">
+
+  <div class="d-flex gap-2 justify-content-center row">
+    {{#each categories}}
+    {{!--  --}}
+    <div class="card m-2 col-sm-6">
+      <img id="img" src="/uploads/{{this.imageUrl}}">
+      <h1 id="title">{{this.name}}</h1>
+      <p id="desc">{{this.description}}</p>
+        <div class="d-flex justify-content-center"><a href="/user/menu/{{this.name}}">
+          <button class="history" type="submit">CHECK ITEMS</button></a>
+        </div>
+      
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+
+<style>
+  body {
+    place-content: center;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: #fff;
+  }
+
+  .card {
+    width: 250px;
+    /* To Prevent Element's Width From Going Below 300px */
+
+    background-color: #fff;
+    font-family: "Open Sans", sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px 16px 18px 0px;
+    border-radius: 15px;
+    /* To Resize */
+    overflow: auto;
+    padding: 10px;
+  }
+
+  @media(max-width:400px) {
+    .card {
+      width: 250px;
+    }
+  }
+
+  #img {
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 7px 7px 0 0;
+  }
+  .history {
+    display: inline-flex;
+    padding: 0.5rem 1rem;
+    background-color: #e9f0ed;
+    color: #000000;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    justify-content: center;
+    width: 150px;
+    border-radius: 0.375rem;
+    border: none;
+    box-shadow: 8px 6px 6px 0 rgba(0, 0, 0, 0.15);
+  }
+  .history:hover{
+    background-color: #f2edf2;
+  }
+
+  .button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #0f1923;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all .15s ease;
+  }
+
+  .button::before,
+  .button::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid #a92f63;
+    transition: all .15s ease;
+  }
+
+  .button::before {
+    top: 0;
+    border-bottom-width: 0;
+  }
+
+  .button::after {
+    bottom: 0;
+    border-top-width: 0;
+  }
+
+  .button:active,
+  .button:focus {
+    outline: none;
+  }
+
+  .button:active::before,
+  .button:active::after {
+    right: 3px;
+    left: 3px;
+  }
+
+  .button:active::before {
+    top: 3px;
+  }
+
+  .button:active::after {
+    bottom: 3px;
+  }
+
+  .button_lg {
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #0f1923;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+
+  .button_lg::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: #0f1923;
+  }
+
+  .button_lg::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #0f1923;
+    transition: all .2s ease;
+  }
+
+  .button_sl {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: -8px;
+    width: 0;
+    background-color: #ff4655;
+    transform: skew(-15deg);
+    transition: all .2s ease;
+  }
+
+  .button_text {
+    position: relative;
+  }
+
+  .button:hover {
+    color: #0f1923;
+  }
+
+  .button:hover .button_sl {
+    width: calc(100% + 15px);
+  }
+
+  .button:hover .button_lg::after {
+    background-color: #fff;
+  }
+
+
+  #title {
+    text-align: center;
+    color: #19191b;
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+
+  #desc {
+    margin: 1rem;
+    color: #19191b;
+    line-height: 1.6rem;
+    word-spacing: 2px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+</style>

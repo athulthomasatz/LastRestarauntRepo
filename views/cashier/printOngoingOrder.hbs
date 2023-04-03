@@ -1,0 +1,57 @@
+{{>cashier-header}}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Ongoing Orders</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ongoing Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Total Amount</th>
+                <th>Payment Status</th>
+                <th>Change Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each orders}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.totalAmount}}.00</td>
+                <td>{{paymentStatus}}</td>
+                <td>
+                    <form method="POST" action="/cashier/changePaymentStatus">
+                        <input type="hidden" name="orderId" value="{{this.id}}">
+                        <button type="submit">Change Payment Status</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+
+</html>

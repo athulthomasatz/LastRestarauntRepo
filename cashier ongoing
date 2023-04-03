@@ -1,0 +1,314 @@
+const orderItemSchema = new mongoose.Schema({
+  product: { 
+    type: mongoose.Schema.Types.ObjectId,   
+    ref: 'Item', 
+    required: true
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  totalPrice : {
+    type : Number,
+    required : true
+  },
+  paid: {
+    type: Boolean,
+    required: true,
+    default: false
+  }
+});
+
+
+
+
+exports.changePaymentStatus = async (req, res) => {
+  try {
+    const orderId = req.body.orderId;
+    const order = await UserOrder.findById(orderId); 
+
+    if (!order) {
+      return res.status(404).send('Order not found');
+    }
+
+    // mark all items in the order as paid
+    order.items.forEach(item => {
+      item.paid = true;
+    });
+
+    order.paymentStatus = 'Payment received';
+    await order.save();
+
+    res.redirect('/cashier/ongoingOrder');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+
+
+exports.getOngoingOrders = async (req, res) => {
+  try {
+    // find all ongoing orders and populate the user field
+    const ongoingOrders = await UserOrder.find({ paymentStatus: 'pending' }).populate('user', 'name');
+    
+    // filter orders where not all items have been paid for
+    const orders = ongoingOrders.filter(order => {
+      return order.items.every(item => {
+        return item.paid;
+      });
+    }).map(order => ({ id: order._id, totalAmount: order.totalAmount, userName: order.user.UserName }));
+
+    // render the printOngoingOrder view with the filtered orders
+    res.render('cashier/printOngoingOrder', { orders });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const mongoose = require('mongoose');
+
+const OrderSummarySchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserData',
+    required: true 
+  },
+  totalAmount: {
+    type: Number,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    default: Date.now
+  }
+});
+
+const OrderSummary = mongoose.model('OrderSummary', OrderSummarySchema);
+
+module.exports = OrderSummary;
+
+
+
+
+
+const OrderSummary = require('./OrderSummary');
+
+exports.changePaymentStatus = async (req, res) => {
+  try {
+    const orderId = req.body.orderId;
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).send('Order not found');
+    }
+
+    order.paymentStatus = 'Payment received';
+    await order.save();
+
+    // Store the total amount of the order in a variable
+    const totalAmount = order.totalAmount;
+
+    // Create a new OrderSummary object with the total amount and user ID
+    const orderSummary = new OrderSummary({
+      user: order.user,
+      totalAmount: totalAmount
+    });
+    await orderSummary.save();
+
+    // Delete the order object for the user
+    await Order.deleteOne({ _id: orderId });
+
+    res.redirect('/cashier/ongoingOrder');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+
+
+SSSSSSSSSSSSSSSOOOOOOOOlLLLLLLLLLLLLUUUUUUUUUUTTTIONNNNNNNNN
+
+
+
+
+
+
+
+
+Sure, in that case, you can first retrieve the totalAmount of the order and store it in a variable. Then, you can create a new OrderSummary model to store the totalAmount and delete the Order object for the given orderId. Here's an example implementation:
+
+First, create a new OrderSummary model in a separate file, let's say OrderSummary.js:
+
+php
+
+const mongoose = require('mongoose');
+
+const OrderSummarySchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserData',
+    required: true 
+  },
+  totalAmount: {
+    type: Number,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    required: true,
+    default: Date.now
+  }
+});
+
+const OrderSummary = mongoose.model('OrderSummary', OrderSummarySchema);
+
+module.exports = OrderSummary;
+
+Then, in the changePaymentStatus function, retrieve the totalAmount of the order and create a new OrderSummary object with the totalAmount and the user ID. Finally, delete the Order object for the given orderId. Here's an updated implementation of the changePaymentStatus function:
+
+scss
+
+const OrderSummary = require('./OrderSummary');
+
+exports.changePaymentStatus = async (req, res) => {
+  try {
+    const orderId = req.body.orderId;
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).send('Order not found');
+    }
+
+    order.paymentStatus = 'Payment received';
+    await order.save();
+
+    // Store the total amount of the order in a variable
+    const totalAmount = order.totalAmount;
+
+    // Create a new OrderSummary object with the total amount and user ID
+    const orderSummary = new OrderSummary({
+      user: order.user,
+      totalAmount: totalAmount
+    });
+    await orderSummary.save();
+
+    // Delete the order object for the user
+    await Order.deleteOne({ _id: orderId });
+
+    res.redirect('/cashier/ongoingOrder');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+
+In this updated implementation, the totalAmount of the order is stored in the totalAmount variable. Then, a new OrderSummary object is created with the totalAmount and the user ID from the Order object. The OrderSummary object is saved to the database using the save() method. Finally, the Order object for the given orderId is deleted using the deleteOne() method.
+thomasathul089@gmail.com
+can you create the model for orderSummary
+
+Sure, here is a possible implementation for the OrderSummary model:
+
+php
+
+const mongoose = require('mongoose');
+
+const orderSummarySchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserData',
+    required: true 
+  },
+  totalAmount: {
+    type: Number,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now
+  }
+});
+
+const OrderSummary = mongoose.model('OrderSummary', orderSummarySchema);
+
+module.exports = OrderSummary;
+
+This model has three fields: user, which is a reference to the UserData model representing the user, totalAmount, which is the total amount of all orders for that user, and createdAt, which is the date when the summary was created.
+
+When a payment is received and the order is deleted, you can create a new OrderSummary document with the user ID and the total amount of the deleted order. You can use Mongoose's aggregate method to calculate the total amount of all orders for a user, like this:
+
+php
+
+const Order = require('./Order');
+const OrderSummary = require('./OrderSummary');
+
+const user = 'user_id'; // replace with the actual user ID
+
+const totalAmount = await Order.aggregate([
+  {
+    $match: {
+      user: mongoose.Types.ObjectId(user),
+      orderStatus: 'completed'
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      totalAmount: { $sum: '$totalAmount' }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      totalAmount: 1
+    }
+  }
+]).exec();
+
+await OrderSummary.create({
+  user: user,
+  totalAmount: totalAmount[0].totalAmount
+});
+
+This code calculates the total amount of all completed orders for the specified user using the $match and $group stages of the aggregation pipeline. Then, it uses the $project stage to remove the _id field from the result, and creates a new OrderSummary document with the user ID and the total amount.

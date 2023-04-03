@@ -1,0 +1,182 @@
+{{>staff-header}}
+{{!-- <style>
+  /* Set font family and size for the whole page */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+
+  /* Style the header */
+  .header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* Style the table */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #a692ef;
+    color: #fff;
+  }
+
+  /* Style the total amount paragraph */
+  p {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  /* Style the order ID */
+  .order h4 {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+</style> 
+
+
+<div class="header">
+  <h3>Guest Orders</h3>
+</div>
+
+{{#each orders}}
+  <div class="order">
+    <h4>Order ID: {{this._id}}</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.items}}
+          <tr>
+            <td>{{this.product.name}}</td>
+            <td>{{this.product.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.totalPrice}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <p>Total Amount: {{this.totalAmount}}</p>
+  </div>
+{{/each}} --}}
+
+
+
+{{!-- <h1>Order List</h1>
+<ul>
+  {{#each ordersg}}
+    <li>{{user.gname}} - {{user.tablename}}</li>
+  {{/each}}
+</ul> --}}
+
+
+<style>
+  /* Set font family and size for the whole page */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+  }
+
+  /* Style the header */
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  /* Style the list of orders */
+  .ul {
+    list-style: none;
+    margin: 20px auto;
+    padding: 0;
+    width: 80%;
+    max-width: 600px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  /* Style each order */
+  .li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Style the table */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #fbeaea;
+    color: #090909;
+  }
+
+  /* Style the order ID */
+  h2 {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+  /* Style the total amount paragraph */
+  p {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+  }
+</style>
+
+<h1>Order List</h1> 
+
+<ul class="ul">
+  {{#each ordersg}}
+    <li class="li">
+      <h2>{{user.gname}} - {{user.tablename}}</h2> 
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            {{!-- <th>Price</th> --}}
+            <th>Quantity</th>
+            <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.items}}
+            <tr>
+              <td>{{this.product}}</td>
+              {{!-- <td>{{this.product.price}}</td> --}}
+              <td>{{this.quantity}}</td>
+              <td>{{this.totalPrice}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <p>Total Amount: {{this.totalAmount}}</p>
+    </li>
+  {{/each}}
+</ul>
+
+

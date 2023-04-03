@@ -1,0 +1,35 @@
+{{!-- <div class="container-fluid container-fluid-custom pb-5 mb-5">
+
+  <div class="row">
+    <% if(searchResults != '') { %>
+      <% searchResults.forEach(function (note, index) { %>
+        
+        <a href="/dashboard/item/<%= note._id %>">
+        <h4><%= note.title %></h4>
+        </a>
+
+      <% }) %>
+    <% } else { %>
+      <p>No items found.</p> 
+    <% } %>
+
+  </div>
+
+</div> --}}
+
+
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+  <div class="row">
+    {{#if searchResults}}
+      {{#each searchResults}}
+        <a href="/dashboard/item/{{this._id}}">
+          <h4>{{this.title}}</h4>
+          {{"kmskmdkasmd"}}
+        </a>
+      {{/each}}
+    {{else}}
+      <p>No items found.</p> 
+    {{/if}}
+  </div>
+</div>
+

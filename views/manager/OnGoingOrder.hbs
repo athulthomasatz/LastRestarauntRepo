@@ -1,0 +1,79 @@
+{{>manager-header}}
+<body>
+<div class="container mt-5">
+  <h1 class="mb-4">Ongoing Orders</h1>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Order Status</th>
+          <th>Order Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+        <tr>
+          <td>{{this._id}}</td>
+          <td>{{this.orderStatus}}</td>
+          <td>₹ {{this.totalAmount}}.00</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <ul>
+              {{#each this.items}}
+              <li>{{this.product.name}} - {{this.quantity}} x {{this.price}}.00 = ₹ {{this.totalPrice}}.00</li>
+              {{/each}}
+            </ul>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+
+
+<style>
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  th,
+  td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+  }
+
+  th {
+    font-weight: 500;
+    text-align: left;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+ 
+    
+    
+  
+</style>
